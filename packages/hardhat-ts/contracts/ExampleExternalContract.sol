@@ -3,10 +3,10 @@ pragma solidity >=0.8.0 <0.9.0;
 //SPDX-License-Identifier: MIT
 
 contract ExampleExternalContract {
+  bool public completed;
 
-    bool public completed;
-
-    function complete() public payable {
-        completed = true;
-    }
+  function complete() public payable {
+    require(!completed, 'Staking has concluded');
+    completed = true;
+  }
 }

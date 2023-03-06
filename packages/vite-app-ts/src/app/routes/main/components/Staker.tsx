@@ -78,10 +78,17 @@ export const Staker: FC<StakerProps> = (props) => {
       setCompleted(completed);
     };
     getCompleted();
+    const getCanWithdraw = async () => {
+      const completed = await externalContractRead?.completed();
+      console.log('✅ complete:', completed);
+      setCompleted(completed);
+    };
+    getCompleted();
   }, [yourCurrentBalance]);
 
   // ** 📟 Listen for broadcast events
   const stakeEvents = useEventListener(stakeContractRead, 'Stake', 1);
+  const withdrawEvents = useEventListener(stakeContractRead, 'Withdraw', 1);
 
   let completeDisplay = <></>;
   if (completed) {
@@ -146,7 +153,7 @@ export const Staker: FC<StakerProps> = (props) => {
           type={balanceStaked ? 'primary' : 'default'}
           onClick={() => {
             if (tx) {
-              tx(stakeContractWrite.stake({ value: ethers.utils.parseEther('0.5') }));
+              tx(stakeContractWrite.stake({ value: ethers.utils.parseEther('0.001') }));
             }
           }}>
           🥩 Stake 0.5 ether!
@@ -154,7 +161,7 @@ export const Staker: FC<StakerProps> = (props) => {
       </div>
 
       <div style={{ width: 600, margin: 'auto', marginTop: 32, paddingBottom: 32 }}>
-        <h2>Events:</h2>
+        <h2>Stake Events:</h2>
         <List
           bordered
           dataSource={stakeEvents}
@@ -172,6 +179,26 @@ export const Staker: FC<StakerProps> = (props) => {
             );
           }}
         />
+      <div style={{ width: 600, margin: 'auto', marginTop: 32, paddingBottom: 32 }}>
+        <h2>Withdraw Events:</h2>
+        <List
+          bordered
+          dataSource={withdrawEvents}
+          renderItem={(item: any) => {
+            return (
+              <List.Item
+                key={item.blockNumber + '_' + item.sender + '_' + item.purpose}
+                style={{ display: 'flex', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '.5rem' }}>
+                  <Address address={item.args[0]} ensProvider={mainnetProvider} fontSize={16} />
+                  <div>→</div>
+                  <div>{formatEther(item.args[1])}</div>
+                </div>
+              </List.Item>
+            );
+          }}
+        />
+      </div>
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import { INFURA_ID } from './constants';
 
 export type TNetworkNames =
   | 'localhost'
+  | 'sepolia'
   | 'mainnet'
   | 'kovan'
   | 'rinkeby'
@@ -19,6 +20,13 @@ export const NETWORKS: Record<TNetworkNames, TNetworkInfo> = {
     chainId: 31337,
     blockExplorer: '',
     rpcUrl: 'http://' + window.location.hostname + ':8545',
+  },
+  sepolia: {
+    name: 'sepolia',
+    color: '#1e1e1e',
+    chainId: 11155111,
+    blockExplorer: '',
+    rpcUrl: 'https://sepolia.infura.io/v3/ec6a8acd1d354717acec099ad46a0bab',
   },
   mainnet: {
     name: 'mainnet',
