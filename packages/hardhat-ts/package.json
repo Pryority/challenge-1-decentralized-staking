@@ -5,7 +5,7 @@
   "scripts": {
     "chain": "hardhat node --network hardhat --no-deploy --hostname 127.0.0.1",
     "fork": "hardhat node --fork https://mainnet.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad",
-    "test": "hardhat test --network hardhat",
+    "test": "hardhat test test/challenge-1.ts --network hardhat",
     "compile": "hardhat compile",
     "deploy": "hardhat deploy --export-all ../vite-app-ts/src/generated/contracts/hardhat_contracts.json",
     "export": "hardhat export --export-all ../vite-app-ts/src/generated/contracts/hardhat_contracts.json",
@@ -16,7 +16,7 @@
     "send": "hardhat send",
     "generate": "hardhat generate",
     "account": "hardhat account",
-    "verify": "hardhat etherscan-verify --api-key PSW8C433Q667DVEX5BCRMGNAH9FSGFZ7Q8"
+    "verify": "hardhat etherscan-verify --api-key --network goerli UC4QH6GCF4PES6R5ITXNUEM2F1QVJKGGBW"
   },
   "dependencies": {
     "@eth-optimism/hardhat-ovm": "^0.2.2",

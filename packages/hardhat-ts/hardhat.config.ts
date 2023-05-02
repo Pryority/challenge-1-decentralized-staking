@@ -23,6 +23,7 @@ import { Provider, TransactionRequest } from '@ethersproject/providers';
 import { HardhatUserConfig, task } from 'hardhat/config';
 import { HttpNetworkUserConfig } from 'hardhat/types';
 import { HardhatRuntimeEnvironmentExtended, TEthers } from 'helpers/types/hardhat-type-extensions';
+require('dotenv').config();
 
 declare module 'hardhat/types/runtime' {
   // This is an example of an extension to the Hardhat Runtime Environment.
@@ -32,11 +33,13 @@ declare module 'hardhat/types/runtime' {
   }
 }
 
+const { PK } = process.env;
+
 const { isAddress, getAddress, formatUnits, parseUnits } = utils;
 //
 // Select the network you want to deploy to here:
 //
-const defaultNetwork = 'sepolia';
+const defaultNetwork = 'hardhat';
 
 const getMnemonic = () => {
   try {
@@ -105,10 +108,8 @@ const config: HardhatUserConfig = {
       },
     },
     goerli: {
-      url: 'https://goerli.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad', // <---- YOUR INFURA ID! (or it won't work)
-      accounts: {
-        mnemonic: getMnemonic(),
-      },
+      url: 'https://goerli.infura.io/v3/e04888c31fd1449d8a0b49c54b8f12b8', // <---- YOUR INFURA ID! (or it won't work)
+      accounts: [`${PK}`],
     },
     xdai: {
       url: 'https://rpc.xdaichain.com/',
@@ -128,7 +129,7 @@ const config: HardhatUserConfig = {
   solidity: {
     compilers: [
       {
-        version: '0.8.6',
+        version: '0.8.4',
         settings: {
           optimizer: {
             enabled: true,
